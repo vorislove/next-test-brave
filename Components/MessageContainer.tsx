@@ -9,7 +9,7 @@ const MessageContainer = () => {
 	return (
 		<Container>
 			{state.modal.map((message) => {
-				return <ModalMessage message={message.message} id={message.id} />;
+				return <ModalMessage message={message.message} key={message.id} id={message.id} />;
 			})}
 		</Container>
 	);

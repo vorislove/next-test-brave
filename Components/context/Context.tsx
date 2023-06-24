@@ -1,14 +1,5 @@
-import { createContext, useReducer, useContext } from 'react';
-import {
-	ContextProps,
-	IModal,
-	IOperator,
-	IState,
-	ActionsType,
-	ContextActionsType,
-	ProviderProps
-} from './type';
-
+import { createContext, useReducer, useContext, useMemo } from 'react';
+import { ContextProps, IState, ActionsType, ContextActionsType, ProviderProps } from './type';
 const initialState: IState = {
 	operators: [
 		{ name: 'Мегафон', id: '1', img: '/megafon.png' },
@@ -17,10 +8,8 @@ const initialState: IState = {
 	],
 	modal: []
 };
-
 export const Context = createContext<ContextProps>({} as ContextProps);
 const DispatchContext = createContext(null);
-
 export const ContextReducer = (state: IState, action?: ContextActionsType) => {
 	switch (action?.type) {
 		case ActionsType.ADD_OPERATOR:
@@ -28,7 +17,7 @@ export const ContextReducer = (state: IState, action?: ContextActionsType) => {
 		case ActionsType.MESSAGE_ADD:
 			return { ...state, modal: [...state.modal, action.payload] };
 		case ActionsType.MESSAGE_DELETE: {
-			const updatedMessage = state.modal.filter((e) => e.id != action.payload);
+			const updatedMessage = state.modal.filter((e) => e.id !== action.payload);
 			return {
 				...state,
 				modal: updatedMessage
@@ -38,16 +27,14 @@ export const ContextReducer = (state: IState, action?: ContextActionsType) => {
 			return state;
 	}
 };
-
 export const ContextProvider = ({ children }: ProviderProps) => {
 	const [state, dispatch] = useReducer(ContextReducer, initialState);
-
+	const memoizedValue = useMemo(() => ({ state }), [state]);
 	return (
-		<Context.Provider value={{ state }}>
+		<Context.Provider value={memoizedValue}>
 			<DispatchContext.Provider value={dispatch}>{children}</DispatchContext.Provider>
 		</Context.Provider>
 	);
 };
-
 export const useDispatchContext = () => useContext(DispatchContext);
 export const useStateContext = () => useContext(Context);

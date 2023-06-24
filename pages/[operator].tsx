@@ -1,14 +1,13 @@
 import { useRouter } from 'next/router';
 import { Container, StyledSpan, Wrapper } from '../Components/ui/Container.styled';
 import { useContext, useState } from 'react';
-import { Context, useDispatchContext } from '../Components/context/Context';
+import { Context } from '../Components/context/Context';
 import styled from 'styled-components';
 import Image from 'next/image';
 import Input from '../Components/ui/Input';
 import Button, { BtnGroup } from '../Components/ui/Buttons/Button.styled';
-import { ActionsType } from '../Components/context/type';
 import { useMessage } from '../Components/Hooks/useMessage';
-import ServerResponse from '../services/api';
+import ServerResponse from '../Components/services/api';
 import { Loader } from '../Components/ui/Loader';
 import Head from 'next/head';
 
@@ -138,17 +137,17 @@ const Operator = () => {
 		router.push('/');
 	};
 
-	const image =
-		operator?.img != '' ? (
-			<Image src={operator?.img} alt={operator?.name} width={80} height={80} />
-		) : (
-			<StyledSpan fs="3rem">{operator?.name[0].toUpperCase()}</StyledSpan>
-		);
+	let image;
+	if (operator?.img != '') {
+		image = <Image src={operator?.img} alt={operator?.name} width={80} height={80} />;
+	} else {
+		image = <StyledSpan fs="3rem">{operator?.name[0].toUpperCase()}</StyledSpan>;
+	}
 
 	return (
 		<Container>
 			<Head>
-				<title>Оплата {operator.name}</title>
+				<title>Оплата {operator?.name}</title>
 			</Head>
 			<OperatorWrapper>
 				<Wrapper>
