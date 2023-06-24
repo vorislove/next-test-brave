@@ -6,4 +6,4 @@
         return aIndex !== -1 || bIndex !== -1 ? Math.max(aIndex, bIndex) : -1; 
 }
 
-### [Ссылка на второе задание](https://next-test-brave.vercel.app)
+### [Ссылка на демо приложения](https://next-test-brave.vercel.app)
