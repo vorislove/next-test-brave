@@ -70,20 +70,18 @@ export const Wrapper = styled.div<IWrapper>`
 
 	&.alert-enter {
 		height: 0;
-		padding: 0;
 	}
 	&.alert-enter-active {
 		height: 200px;
 		transition: all 300ms;
-		padding: 15px;
 	}
 	&.alert-exit {
 		height: 200px;
 		padding: 15px;
 	}
 	&.alert-exit-active {
-		padding: 0;
 		height: 0;
+		padding: 0;
 		margin: 0;
 		transform: translateY(80px) scale(0.8);
 		transition: all 300ms;
@@ -95,14 +93,17 @@ export const Wrapper = styled.div<IWrapper>`
 
 	&.alert-tablet-enter-active {
 		width: 100%;
-		transition: width 300ms;
+		transition: all 300ms;
 	}
 	&.alert-tablet-exit {
 		width: 100%;
 	}
 	&.alert-tablet-exit-active {
 		width: 0;
-		transition: width 300ms;
+		padding: 0;
+		margin: 0;
+		transform: translateX(-120px) scale(0.4);
+		transition: all 300ms;
 	}
 `;
 
