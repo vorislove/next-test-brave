@@ -1,19 +1,16 @@
 import type { NextPage } from 'next';
 import { CSSTransition } from 'react-transition-group';
-import { useState, useContext, createRef, useEffect } from 'react';
-
+import { useState, useContext, useRef } from 'react';
 import { ActionsType } from '../Components/context/type';
 import { OperatorItem } from '../Components/OperatorItem';
 import { Context, useDispatchContext } from '../Components/context/Context';
 import { useMessage } from '../Components/Hooks/useMessage';
 import styled from 'styled-components';
 import Input from '../Components/ui/Input';
-
 import ButtonClosed from '../Components/ui/Buttons/ClosedButton';
 import Button, { BtnGroup } from '../Components/ui/Buttons/Button.styled';
 import { Container, Wrapper } from '../Components/ui/Container.styled';
 import Head from 'next/head';
-import { Loader } from '../Components/ui/Loader';
 import useDeviceType from '../Components/Hooks/useTypeDevices';
 import { ESize, device } from '../Components/ui/breakpoints';
 
@@ -24,6 +21,8 @@ const Home: NextPage = () => {
 	const message = useMessage(3000);
 	const [valid, setValid] = useState<boolean>(true);
 	const [show, setShow] = useState<boolean>(false);
+	const nodeRef = useRef(null);
+	const nodeBtnRef = useRef(null);
 
 	const onChangeNameOperator = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setValid(true);
@@ -57,12 +56,9 @@ const Home: NextPage = () => {
 	};
 
 	const typeDevice = useDeviceType();
-	useEffect(() => {
-		console.log(typeDevice);
-	}, [typeDevice]);
 
 	const addCardBlock = (
-		<Wrapper mrgn="0 auto" position="relative" maxHeight="220px">
+		<Wrapper mrgn="1.5rem auto 0 auto" position="relative" ref={nodeRef} maxHeight="228px">
 			<OvrfHidden>
 				<Title>Добавте вашего оператора</Title>
 				<Input
@@ -76,6 +72,7 @@ const Home: NextPage = () => {
 				<BtnGroup>
 					<Button onClick={onAddHandler}>Добавить</Button>
 				</BtnGroup>
+
 				{typeDevice !== ESize.DESKTOP ? <ButtonClosed onClick={hideAddCard} /> : null}
 			</OvrfHidden>
 		</Wrapper>
@@ -96,13 +93,21 @@ const Home: NextPage = () => {
 				) : null}
 				<HomeWrapper>
 					{typeDevice !== ESize.DESKTOP ? (
-						<CSSTransition in={show} classNames="alert" unmountOnExit timeout={300}>
+						<CSSTransition
+							in={show}
+							nodeRef={nodeRef}
+							classNames={typeDevice === ESize.TABLET ? 'alert-tablet' : 'alert'}
+							unmountOnExit
+							onEnter={() => setShow(true)}
+							onExited={() => setShow(false)}
+							timeout={300}
+						>
 							{addCardBlock}
 						</CSSTransition>
 					) : (
 						addCardBlock
 					)}
-					<Wrapper mrgn="0 auto" position="relative">
+					<Wrapper mrgn="1.5rem auto" position="relative">
 						{state.operators.map((item) => (
 							<OperatorItem key={item.id} href={`/${item.id}`} img={item.img} name={item.name} />
 						))}
@@ -124,24 +129,27 @@ const HomeWrapper = styled.div`
 	flex-direction: row-reverse;
 	justify-content: space-between;
 	width: 100%;
-	gap: 3rem;
 	max-width: 1200px;
 
 	@media ${device.mobile} {
 		flex-direction: column;
-		gap: 1.5rem;
 	}
 
 	@media ${device.tablet} {
 		flex-direction: row-reverse;
 		max-width: 1024px;
-		gap: 2rem;
+		gap: 1.5rem;
+	}
+
+	@media ${device.desktop} {
+		gap: 1.5rem;
 	}
 `;
 
 const Title = styled.span`
 	font-size: 1.5rem;
 	font-weight: 600;
+	height: auto;
 `;
 
 const OvrfHidden = styled.div`

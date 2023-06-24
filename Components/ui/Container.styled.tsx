@@ -1,21 +1,5 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { device } from './breakpoints';
-
-interface ITheme {
-	breakpoints: {
-		mobile: string;
-		tablet: string;
-		desktop: string;
-	};
-}
-
-const theme: ITheme = {
-	breakpoints: {
-		mobile: '768px',
-		tablet: '1024px',
-		desktop: '1200px'
-	}
-};
 
 export const Container = styled.div<{
 	width?: string;
@@ -34,11 +18,10 @@ export const Container = styled.div<{
 	margin: 20px auto 0 auto;
 	min-width: 300px;
 	padding: 3rem;
-	gap: 1.5rem;
+	/* gap: 1.5rem; */
 	position: ${({ position }) => position};
 
 	@media ${device.mobile} {
-		/* flex-direction: row; */
 		max-width: 768px;
 		padding: 1.5rem;
 	}
@@ -60,6 +43,17 @@ interface IWrapper {
 	trnstn?: string;
 }
 
+const fadeIn = keyframes`
+from {
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+to {
+  opacity: 1;
+}`;
+
 export const Wrapper = styled.div<IWrapper>`
 	position: ${({ position }) => position};
 	border-radius: 6px;
@@ -70,28 +64,45 @@ export const Wrapper = styled.div<IWrapper>`
 	width: ${({ width = '100%' }) => width};
 	height: ${({ height }) => height};
 	max-height: ${({ maxHeight }) => maxHeight};
-	min-height: 50px;
 	box-shadow: 0.7rem 0.7rem 0 var(--color-shadow, currentColor);
 	border: 3px solid #212121;
 	margin: ${({ mrgn }) => mrgn};
-	transition: ${({ trnstn }) => trnstn};
 
 	&.alert-enter {
 		height: 0;
-		opacity: 0;
+		padding: 0;
 	}
 	&.alert-enter-active {
-		height: 100%;
-		opacity: 1;
-		transition: height opacity 300ms;
+		height: 200px;
+		transition: all 300ms;
+		padding: 15px;
 	}
 	&.alert-exit {
-		height: 100%;
+		height: 200px;
+		padding: 15px;
 	}
 	&.alert-exit-active {
+		padding: 0;
 		height: 0;
-		transform: translateY(100px) scale(0.8);
+		margin: 0;
+		transform: translateY(80px) scale(0.8);
 		transition: all 300ms;
+	}
+
+	&.alert-tablet-enter {
+		width: 0;
+	}
+
+	&.alert-tablet-enter-active {
+		width: 100%;
+		transition: width 300ms;
+	}
+	&.alert-tablet-exit {
+		width: 100%;
+	}
+	&.alert-tablet-exit-active {
+		width: 0;
+		transition: width 300ms;
 	}
 `;
 

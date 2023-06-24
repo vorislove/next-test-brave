@@ -16,7 +16,7 @@ const ClosedBtn = styled.button`
 	align-items: center;
 	justify-content: center;
 	top: 0;
-	left: 96%;
+	right: -15px;
 	transform: translateY(-50%);
 	box-shadow: 0.2rem 0.2rem 0 #212121;
 	border: 3px solid #212121;
