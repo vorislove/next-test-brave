@@ -138,6 +138,7 @@ const HomeWrapper = styled.div`
 	@media ${device.tablet} {
 		flex-direction: row-reverse;
 		max-width: 1024px;
+		gap: 1.5rem;
 	}
 
 	@media ${device.desktop} {
