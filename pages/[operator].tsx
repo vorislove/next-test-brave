@@ -133,7 +133,7 @@ const Operator = () => {
 					});
 			}
 		},
-		[sumValid, phoneValid, sum, phone, message, router]
+		[sumValid, phoneValid, sum, phone, message, router, serverResponse]
 	);
 
 	const toMainHandler = useCallback(
