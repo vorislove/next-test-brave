@@ -1,13 +1,18 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
+import { Icon } from '../Icon';
 
 interface IButton {
 	onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const ButtonClosed: FC<IButton> = ({ onClick }) => {
-	return <ClosedBtn onClick={onClick}>&times;</ClosedBtn>;
+	return (
+		<ClosedBtn onClick={onClick}>
+			<Icon name="x" />
+		</ClosedBtn>
+	);
 };
 
 const ClosedBtn = styled.button`

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { Container, StyledSpan, Wrapper } from '../Components/ui/Container.styled';
-import { useContext, useState } from 'react';
+import { useContext, useState, useCallback, useEffect } from 'react';
 import { Context } from '../Components/context/Context';
 import styled from 'styled-components';
 import Image from 'next/image';
@@ -33,9 +33,10 @@ const Operator = () => {
 		text: string;
 	}
 
-	const operator = state.operators.find((item) => {
-		return item.id === router.query.operator;
-	});
+	const [operator, setOperator] = useState(null);
+	useEffect(() => {
+		setOperator(state.operators.find((item) => item.id === router.query.operator));
+	}, [router.query.operator, state.operators]);
 
 	//обрабочик на поле ввода телефона
 	const changeHandlerPhone = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,49 +94,55 @@ const Operator = () => {
 	};
 
 	//обработчик на отправку формы
-	const sendHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault();
+	const sendHandler = useCallback(
+		(e: React.MouseEvent<HTMLButtonElement>) => {
+			e.preventDefault();
 
-		//проверка наличия телефона
-		if ((phone[0] == '8' && phone.length == 17) || (phone[0] == '+' && phone.length == 18)) {
-			setPhoneValid({ ...phoneValid, valid: true });
-		} else {
-			setPhoneValid({ ...phoneValid, valid: false });
-		}
+			//проверка наличия телефона
+			if ((phone[0] == '8' && phone.length == 17) || (phone[0] == '+' && phone.length == 18)) {
+				setPhoneValid({ ...phoneValid, valid: true });
+			} else {
+				setPhoneValid({ ...phoneValid, valid: false });
+			}
 
-		//проверка наличия суммы
-		if (sum == '') {
-			setSumValid({ ...sumValid, valid: false, text: 'Введите сумму' });
-		} else if (Number(sum) > 1000 || Number(sum) < 1) {
-			setSumValid({ ...sumValid, valid: false, text: 'Мин: 1 руб., Макс: 1000 руб.' });
-		}
+			//проверка наличия суммы
+			if (sum == '') {
+				setSumValid({ ...sumValid, valid: false, text: 'Введите сумму' });
+			} else if (Number(sum) > 1000 || Number(sum) < 1) {
+				setSumValid({ ...sumValid, valid: false, text: 'Мин: 1 руб., Макс: 1000 руб.' });
+			}
 
-		//эмуляция ответа от сервера
-		if (
-			sumValid.valid &&
-			phoneValid.valid &&
-			sum &&
-			((phone[0] == '8' && phone.length == 17) || (phone[0] == '+' && phone.length == 18))
-		) {
-			setIsLoading(true);
-			serverResponse
-				.getResponse(phone, sum)
-				.then((res) => {
-					setIsLoading(false);
-					message(res);
-					router.push('/');
-				})
-				.catch((error) => {
-					setIsLoading(false);
-					message(error.message);
-				});
-		}
-	};
+			//эмуляция ответа от сервера
+			if (
+				sumValid.valid &&
+				phoneValid.valid &&
+				sum &&
+				((phone[0] == '8' && phone.length == 17) || (phone[0] == '+' && phone.length == 18))
+			) {
+				setIsLoading(true);
+				serverResponse
+					.getResponse(phone, sum)
+					.then((res) => {
+						setIsLoading(false);
+						message(res);
+						router.push('/');
+					})
+					.catch((error) => {
+						setIsLoading(false);
+						message(error.message);
+					});
+			}
+		},
+		[sumValid, phoneValid, sum, phone, message, router]
+	);
 
-	const toMainHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault();
-		router.push('/');
-	};
+	const toMainHandler = useCallback(
+		(e: React.MouseEvent<HTMLButtonElement>) => {
+			e.preventDefault();
+			router.push('/');
+		},
+		[router]
+	);
 
 	let image;
 	if (operator?.img != '') {

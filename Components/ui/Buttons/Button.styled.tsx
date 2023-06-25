@@ -29,6 +29,7 @@ const ButtonStyled = styled.button<BtnProps>`
 	cursor: pointer;
 	width: 100%;
 	height: 50px;
+	font-size: 14px;
 `;
 
 export const BtnGroup = styled.div`
