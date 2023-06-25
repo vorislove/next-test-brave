@@ -4,7 +4,7 @@ import { device } from './breakpoints';
 
 interface IInput {
 	type: string;
-	placeholder: ReactNode;
+	placeholder: string;
 	value: string | number;
 	className?: string;
 	maxlength?: number;
@@ -31,13 +31,14 @@ const Input: FC<IInput> = ({
 				<input
 					type={type}
 					value={value}
-					className={className}
+					className="field"
 					onChange={onChange}
 					placeholder=" "
 					maxLength={maxlength}
 					onKeyDown={onKeyDown}
+					id={placeholder}
 				/>
-				<span className="field">{placeholder}</span>
+				<label htmlFor={placeholder} data-title={placeholder} title={placeholder}></label>
 			</StyledInput>
 		</Wrapper>
 	);
@@ -51,7 +52,7 @@ const Wrapper = styled.div<{ firstChild?: boolean }>`
 	margin: 20px 0 0 0;
 `;
 
-const StyledInput = styled.label<{ valid?: boolean }>`
+const StyledInput = styled.div<{ valid?: boolean }>`
 	position: relative;
 
 	input {
@@ -68,20 +69,21 @@ const StyledInput = styled.label<{ valid?: boolean }>`
 
 		&:focus,
 		&:not(:placeholder-shown) {
-			& + span {
+			& + label::before {
+				content: attr(title);
 				transform: translate(0.25rem, -65%) scale(0.8);
 				color: ${({ valid }) => (valid ? '#fab700' : 'red')};
 			}
 		}
 	}
 
-	span {
+	label::before {
+		content: attr(title);
 		position: absolute;
 		left: 0;
 		top: 0;
 		padding: calc(0.5rem * 0.75) calc(0.5rem * 0.5);
 		margin: calc(0.5rem * 0.75 + 3px) calc(0.5rem * 0.5 + 10px);
-		background: pink;
 		white-space: nowrap;
 		transform: translate(0, 0);
 		transform-origin: 0 0;
