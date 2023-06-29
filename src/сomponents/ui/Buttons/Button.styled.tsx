@@ -7,13 +7,14 @@ interface BtnProps {
 
 interface IButton {
 	children: React.ReactNode;
+	disabled?: boolean;
 	bg?: string;
 	onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const Button: FC<IButton> = ({ children, bg, onClick }) => {
+const Button: FC<IButton> = ({ children, bg, onClick, disabled = false }) => {
 	return (
-		<ButtonStyled onClick={onClick} bg={bg}>
+		<ButtonStyled onClick={onClick} bg={bg} disabled={disabled}>
 			{children}
 		</ButtonStyled>
 	);
@@ -30,6 +31,10 @@ const ButtonStyled = styled.button<BtnProps>`
 	width: 100%;
 	height: 50px;
 	font-size: 14px;
+
+	&:disabled {
+		opacity: 0.6;
+	}
 `;
 
 export const BtnGroup = styled.div`
