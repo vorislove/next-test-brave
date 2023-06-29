@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useContext } from 'react';
-import { Context } from './context/Context';
+import { Context } from '../context/Context';
 import ModalMessage from './ModalMessage';
 
 const MessageContainer = () => {

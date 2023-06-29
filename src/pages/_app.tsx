@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 import { createGlobalStyle } from 'styled-components';
-import { ContextProvider } from '../Components/context/Context';
-import MessageContainer from '../Components/MessageContainer';
+import { ContextProvider } from '../context/Context';
+import MessageContainer from '../сomponents/MessageContainer';
 import Head from 'next/head';
 
 const Global = createGlobalStyle`

@@ -1,28 +1,27 @@
 import type { NextPage } from 'next';
 import { CSSTransition } from 'react-transition-group';
 import { useState, useContext, useRef } from 'react';
-import { ActionsType } from '../Components/context/type';
-import { OperatorItem } from '../Components/OperatorItem';
-import { Context, useDispatchContext } from '../Components/context/Context';
-import { useMessage } from '../Components/Hooks/useMessage';
+import { ActionsType } from '../context/type';
+import { OperatorItem } from '../сomponents/OperatorItem';
+import { Context, useDispatchContext } from '../context/Context';
+import { useMessage } from '../hooks/useMessage';
 import styled from 'styled-components';
-import Input from '../Components/ui/Input';
-import ButtonClosed from '../Components/ui/Buttons/ClosedButton';
-import Button, { BtnGroup } from '../Components/ui/Buttons/Button.styled';
-import { Container, Wrapper } from '../Components/ui/Container.styled';
+import Input from '../сomponents/ui/Input';
+import ButtonClosed from '../сomponents/ui/Buttons/ClosedButton';
+import Button, { BtnGroup } from '../сomponents/ui/Buttons/Button.styled';
+import { Container, Wrapper } from '../сomponents/ui/Container.styled';
 import Head from 'next/head';
-import useDeviceType from '../Components/Hooks/useTypeDevices';
-import { ESize, device } from '../Components/ui/breakpoints';
+import useDeviceType from '../hooks/useTypeDevices';
+import { ESize, device } from '../сomponents/ui/breakpoints';
 
 const Home: NextPage = () => {
 	const { state } = useContext(Context);
-	const [operator, setOperator] = useState<string>('');
+	const [operator, setOperator] = useState('');
 	const dispatch = useDispatchContext();
 	const message = useMessage(3000);
-	const [valid, setValid] = useState<boolean>(true);
-	const [show, setShow] = useState<boolean>(false);
+	const [valid, setValid] = useState(true);
+	const [show, setShow] = useState(false);
 	const nodeRef = useRef(null);
-	const nodeBtnRef = useRef(null);
 
 	const onChangeNameOperator = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setValid(true);

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { device, size, ESize } from '../ui/breakpoints';
+import { ESize } from '../сomponents/ui/breakpoints';
 
 const useDeviceType = (): string => {
 	const [deviceType, setDeviceType] = useState<ESize>(ESize.TABLET);

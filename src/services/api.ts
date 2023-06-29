@@ -1,4 +1,4 @@
-export default class ServerResponse {
+class ServerResponse {
 	private readonly responses: string[] = [
 		'Пополнение счета прошло успешно',
 		'Произошла ошибка при обработке запроса'
@@ -18,3 +18,5 @@ export default class ServerResponse {
 		});
 	}
 }
+
+export const serverResponse = new ServerResponse();
