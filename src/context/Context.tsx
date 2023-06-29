@@ -6,12 +6,7 @@ const initialState: IState = {
 		{ name: 'МТС', id: '2', img: '/mts.png' },
 		{ name: 'Билайн', id: '6', img: '/beeline.png' }
 	],
-	modal: [
-		{
-			message: 'sds',
-			id: 'sdsdsdsdfrgr2'
-		}
-	]
+	modal: []
 };
 export const Context = createContext<ContextProps>({} as ContextProps);
 const DispatchContext = createContext(null);
